@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
     R_tree<int> tree;
     vector<int> found;
 
-    srand(time(NULL));
+    srand((unsigned)time(NULL));
 
     t = clock();
     for (int i = 0; i < kMaxTreeElements; ++i)
