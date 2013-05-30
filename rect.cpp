@@ -6,7 +6,7 @@
 #include <limits>
 #include <math.h>
 
-namespace azone
+namespace rtree
 {
 
 using namespace std;
@@ -94,14 +94,6 @@ Rect::Rect(long x1, long y1, long x2, long y2)
 {
 }
 
-Rect::Rect(double x1, double y1, double x2, double y2)
-    :
-    left_(static_cast<long>(floor(min(x1, x2)))),
-    right_(static_cast<long>(ceil(max(x1, x2)))),
-    bottom_(static_cast<long>(floor(min(y1, y2)))),
-    top_(static_cast<long>(ceil(max(y1, y2))))
-{
-}
 
 
 void
@@ -161,27 +153,6 @@ Rect::set(long x1, long y1, long x2, long y2)
     top_ = max(y1, y2);
 }
 
-void
-Rect::set(double x1, double y1, double x2, double y2)
-{
-    left_ = static_cast<long>(floor(min(x1, x2)));
-    right_ = static_cast<long>(ceil(max(x1, x2)));
-    bottom_ = static_cast<long>(floor(min(y1, y2)));
-    top_ = static_cast<long>(ceil(max(y1, y2)));
-}
-
-
-//Point
-//Rect::left_bottom() const
-//{
-//    return Point(left_, bottom_);
-//}
-//
-//Point
-//Rect::right_top() const
-//{
-//    return Point(right_, top_);
-//}
 
 long
 Rect::width() const
@@ -528,4 +499,4 @@ void merge(Rect_vector const& src, Rect_vector& dest)
 
 
 
-}//namespace azone
+}//namespace rtree

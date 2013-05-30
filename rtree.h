@@ -9,10 +9,11 @@
 #include <memory>           //std::allocator
 #include <limits>           //std::numeric_limits
 
-#include <boost/aligned_storage.hpp>
-#include <boost/type_traits.hpp>
+//#include <boost/aligned_storage.hpp>
+//#include <boost/type_traits.hpp>
+#include <type_traits>
 
-namespace azone
+namespace rtree
 {
 
 namespace details
@@ -192,8 +193,8 @@ private:
     rect_type                           bbox_;          //bounding box
     tree_node*                          childs_[F];
 
-    typename boost::aligned_storage<sizeof(T),
-                                    boost::alignment_of<T>::value >::type data_;
+    typename std::aligned_storage<sizeof(T),
+                                  std::alignment_of<T>::value >::type data_;
 
 #ifdef RTREE_DEBUG
 public:
@@ -219,7 +220,7 @@ template<class T, size_t F>
 struct tree_iterator
 {
     typedef Rect                                                    rect_type;
-    typedef tree_node<typename boost::remove_const<T>::type, F>     tree_node;
+    typedef tree_node<typename std::remove_const<T>::type, F>       tree_node;
     typedef T                                                       value_type;
 
     //iterator required definitions
@@ -235,7 +236,7 @@ public:
     {
     }
 
-    tree_iterator(tree_iterator< typename boost::remove_const<T>::type, F > const& oth)//allow constructing from non-const iterator
+    tree_iterator(tree_iterator< typename std::remove_const<T>::type, F > const& oth)//allow constructing from non-const iterator
         :
         node_(oth.node())
     {
@@ -773,7 +774,7 @@ private:
 
         //sort bracnhes by distance to query point
         std::vector< details::heap_data<size_t> > sorted;
-        for (size_t ind = 0; ind < sorted.size(); ++ind)
+        for (size_t ind = 0; ind < node->count(); ++ind)
         {
             coord_type distance = sqare_distance(node->get_child(ind)->bbox(), query);
             sorted.push_back(details::heap_data<size_t>(distance, ind));
@@ -1250,7 +1251,7 @@ private:
 
 //implementation
 
-}//namspace azone
+}//namspace rtree
 
 
 

@@ -3,7 +3,7 @@
 #include <stack>
 #include <functional>
 
-namespace azone
+namespace rtree
 {
 
 class Point
@@ -75,7 +75,6 @@ public:
     Rect();
     Rect(Point const& lb, Point const& rt);
     Rect(long x1, long y1, long x2, long y2);
-    Rect(double x1, double y1, double x2, double y2);
 
     void        set_left    (long x);
     long        left        () const;
@@ -90,7 +89,6 @@ public:
     long        bottom        () const;
 
     void        set            (long x1 = 0L, long y1 = 0L, long x2 = 0L, long y2 = 0L);
-    void        set            (double x1 = 0.0, double y1 = 0.0, double x2 = 0.0, double y2 = 0.0);
     //Point        left_bottom() const;
     //Point        right_top() const;
 
@@ -110,13 +108,13 @@ public:
     void        rotate      (double cosx, double sinx);
     void        shift       (long dx, long dy);
 
-    long        width        () const;
-    long        height        () const;
+    long        width       () const;
+    long        height      () const;
 
-    double        area        () const;
-    double        hoverlap    (Rect const& oth) const;
-    double        voverlap    (Rect const& oth) const;
-    double        overlap        (Rect const& oth) const;
+    double      area        () const;
+    double      hoverlap    (Rect const& oth) const;
+    double      voverlap    (Rect const& oth) const;
+    double      overlap     (Rect const& oth) const;
 
     //merge two rectangle into one bounding box
     void        outersect    (Rect const& oth);
@@ -295,4 +293,4 @@ Comparator_equal<T> compare_equal(T comparator)
 void merge(Rect_vector const& src, Rect_vector& dest);
 
 
-}//namespace azone
+}//namespace rtree
